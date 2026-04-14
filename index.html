@@ -13,9 +13,6 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
   <!-- Google Font -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
@@ -44,25 +41,18 @@
 <body class="bg-slate-100">
   <div id="root"></div>
 
-  <!-- ✅ 載入資料（路徑非常重要） -->
+  <!-- ✅ 載入資料（請確認路徑正確） -->
   <script src="./data/pricingData.js"></script>
 
-  <!-- React App -->
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState } = React;
 
     function App() {
       const [origin, setOrigin] = useState('');
       const [pickup, setPickup] = useState('');
       const [vehicle, setVehicle] = useState('');
 
-      useEffect(() => {
-        if (window.lucide) {
-          window.lucide.createIcons();
-        }
-      });
-
-      // ✅ 取三維資料（關鍵）
+      // ✅ 正確三維資料存取
       const rawResults =
         pricingData[origin]
           ?.vehicles?.[vehicle]
@@ -168,7 +158,7 @@
                   <div className="space-y-3 animate-fade-in">
                     {results.map(item => (
                       <div
-                        key={item.company}
+                        key={`${item.company}-${item.price}`}
                         className={`relative bg-white p-4 rounded-xl border-2
                           ${item.price === minPrice
                             ? 'border-[#FFCC00]'
@@ -182,18 +172,21 @@
                         )}
 
                         <div className="flex justify-between items-start">
+                          {/* 左：廠商資訊 */}
                           <div>
                             <div className="text-lg font-black italic">
                               {item.company}
                             </div>
 
+                            {/* ✅ 電話：純文字，顯示在名稱下方 */}
                             {item.phone && (
-                              <div className="text-[11px] text-slate-500 font-bold mt-1">
+                              <div className="text-[11px] text-slate-500 font-semibold mt-1">
                                 {item.phone}
                               </div>
                             )}
                           </div>
 
+                          {/* 右：價格 */}
                           <div className="text-right">
                             <div className="text-2xl font-black">
                               {item.price.toLocaleString()}
