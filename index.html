@@ -41,21 +41,32 @@
 <body class="bg-slate-100">
   <div id="root"></div>
 
-  <!-- ✅ 載入資料 -->
+  <!-- ✅ 載入資料（請確認路徑正確） -->
   <script src="./data/pricingData.js"></script>
 
   <script type="text/babel">
     const { useState } = React;
 
     /**
-     * ✅ 最終正確的「車輛類型判斷」
-     * 規則：只要這個 key 對應的 value 是一個「物件」
-     * （裡面有取件地點），就是真正的車型
+     * ✅ 最終且唯一正確的「車輛類型判斷」
+     *
+     * 規則：
+     * 1. vehicles[key] 必須存在
+     * 2. 必須是 object（不是字串、不是陣列）
+     * 3. 該 object 的「每一個 value」都必須是 Array（報價列表）
+     *
+     * ✅ 車型（3.5T / 500 / 501-1000） → 通過
+     * ❌ 聯絡電話 / 電話清單 → 被排除
      */
-    const isVehicleType = (origin, key) => {
-      const value = pricingData?.[origin]?.vehicles?.[key];
-      return value && typeof value === 'object' && !Array.isArray(value);
-    };
+    function isVehicleType(origin, key) {
+      const vehicleObj = pricingData?.[origin]?.vehicles?.[key];
+
+      if (!vehicleObj || typeof vehicleObj !== 'object' || Array.isArray(vehicleObj)) {
+        return false;
+      }
+
+      return Object.values(vehicleObj).every(v => Array.isArray(v));
+    }
 
     function App() {
       const [origin, setOrigin] = useState('');
@@ -63,9 +74,7 @@
       const [vehicle, setVehicle] = useState('');
 
       const rawResults =
-        pricingData[origin]
-          ?.vehicles?.[vehicle]
-          ?.[pickup] ?? [];
+        pricingData?.[origin]?.vehicles?.[vehicle]?.[pickup] ?? [];
 
       const results = rawResults
         .filter(r => typeof r.price === 'number')
@@ -129,7 +138,7 @@
                 </div>
               )}
 
-              {/* 3. 車輛類型（✅ 已用資料結構判斷，最穩定） */}
+              {/* 3. 車輛類型 */}
               {pickup && (
                 <div>
                   <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">
