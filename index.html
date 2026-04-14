@@ -41,18 +41,20 @@
 <body class="bg-slate-100">
   <div id="root"></div>
 
-  <!-- ✅ 載入資料（這一行非常重要） -->
+  <!-- ✅ 載入資料 -->
   <script src="./data/pricingData.js"></script>
 
   <script type="text/babel">
     const { useState } = React;
+
+    // ✅ 只允許真正的車輛類型（防止「聯絡電話」混進來）
+    const isVehicleType = (v) => /T$|KG$/i.test(v);
 
     function App() {
       const [origin, setOrigin] = useState('');
       const [pickup, setPickup] = useState('');
       const [vehicle, setVehicle] = useState('');
 
-      // ✅ 正確的三維資料存取
       const rawResults =
         pricingData[origin]
           ?.vehicles?.[vehicle]
@@ -120,26 +122,28 @@
                 </div>
               )}
 
-              {/* 3. 車輛類型（✅ 只剩這一排按鈕） */}
+              {/* 3. 車輛類型（✅ 已過濾，只剩真正車型） */}
               {pickup && (
                 <div>
                   <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">
                     3. 選擇車輛類型
                   </label>
                   <div className="grid grid-cols-3 gap-3">
-                    {Object.keys(pricingData[origin].vehicles).map(v => (
-                      <button
-                        key={v}
-                        onClick={() => setVehicle(v)}
-                        className={`py-3 rounded-xl font-black border-2 transition-all
-                          ${vehicle === v
-                            ? 'bg-[#FFCC00] border-slate-900'
-                            : 'bg-white border-slate-200 text-slate-400'}
-                        `}
-                      >
-                        {v}
-                      </button>
-                    ))}
+                    {Object.keys(pricingData[origin].vehicles)
+                      .filter(isVehicleType)
+                      .map(v => (
+                        <button
+                          key={v}
+                          onClick={() => setVehicle(v)}
+                          className={`py-3 rounded-xl font-black border-2 transition-all
+                            ${vehicle === v
+                              ? 'bg-[#FFCC00] border-slate-900'
+                              : 'bg-white border-slate-200 text-slate-400'}
+                          `}
+                        >
+                          {v}
+                        </button>
+                      ))}
                   </div>
                 </div>
               )}
@@ -172,13 +176,10 @@
                         )}
 
                         <div className="flex justify-between items-start">
-                          {/* 左：廠商資訊 */}
                           <div>
                             <div className="text-lg font-black italic">
                               {item.company}
                             </div>
-
-                            {/* ✅ 電話：純文字，不是按鈕 */}
                             {item.phone && (
                               <div className="text-[11px] text-slate-500 font-semibold mt-1">
                                 {item.phone}
@@ -186,7 +187,6 @@
                             )}
                           </div>
 
-                          {/* 右：價格 */}
                           <div className="text-right">
                             <div className="text-2xl font-black">
                               {item.price.toLocaleString()}
