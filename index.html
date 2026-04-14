@@ -1,212 +1,229 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>外車報價查詢系統</title>
-    <!-- 引用外部資源：React, Tailwind, Lucide Icons -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/@lucide/lab@latest"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; }
-        .animate-fade-in { animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>外車報價查詢系統</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React & Babel -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Font -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.35s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
+
 <body class="bg-slate-100">
-    <div id="root"></div>
+  <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+  <!-- ✅ 載入資料（路徑非常重要） -->
+  <script src="./data/pricingData.js"></script>
 
-        function App() {
-            const [selectedTonnage, setSelectedTonnage] = useState(null);
-            const [selectedLocation, setSelectedLocation] = useState('機場');
+  <!-- React App -->
+  <script type="text/babel">
+    const { useState, useEffect } = React;
 
-            const locations = [
-                '機場', '臺北市內湖區', '臺北市松山區', '臺北市南港區', '臺北市信義區', 
-                '臺北市士林區', '臺北市大同區', '臺北市北投區', '新北市汐止區', '新北市淡水區', 
-                '基隆市', '宜蘭縣', '花蓮縣', '台東縣'
-            ];
-            
-            const companies = [
-                { name: '大誠', phone: '02-7751-5563' },
-                { name: '新欣', phone: '02-2812-6906' },
-                { name: '全濬', phone: '03-313-4455' }
-            ];
+    function App() {
+      const [origin, setOrigin] = useState('');
+      const [pickup, setPickup] = useState('');
+      const [vehicle, setVehicle] = useState('');
 
-            const pricingData = {
-                '3.5T': {
-                    '機場': [2500, 2100, 4300], '臺北市內湖區': [2000, 2000, 3800],
-                    '臺北市松山區': [2100, 2000, 4000], '臺北市南港區': [2000, 2000, 4000],
-                    '臺北市信義區': [2100, 2000, 4000], '臺北市士林區': [2200, 2000, 4200],
-                    '臺北市大同區': [2100, 2000, 4000], '臺北市北投區': [2200, 2000, 4200],
-                    '新北市汐止區': [2000, 2400, 4000], '新北市淡水區': [2800, 2300, 4800],
-                    '宜蘭縣': [3300, 3300, 5300], '基隆市': [2800, 2400, 4800],
-                    '花蓮縣': ['電洽', '無', '電洽'], '台東縣': ['電洽', '無', '電洽']
-                },
-                '6.2T': {
-                    '機場': [4000, '無', 6500], '臺北市內湖區': [3000, '無', 5000],
-                    '臺北市松山區': [3200, '無', 5300], '臺北市南港區': [3000, '無', 5300],
-                    '臺北市信義區': [3200, '無', 5300], '臺北市士林區': [3500, '無', 5700],
-                    '臺北市大同區': [3200, '無', 5300], '臺北市北投區': [3500, '無', 5700],
-                    '新北市汐止區': [3000, '無', 5300], '新北市淡水區': [4300, '無', 6500],
-                    '宜蘭縣': [4800, '無', 7000], '基隆市': [4300, '無', 6500],
-                    '花蓮縣': ['電洽', '無', '電洽'], '台東縣': ['電洽', '無', '電洽']
-                },
-                '17T': {
-                    '機場': [6000, '無', 12500], '臺北市內湖區': ['電洽', '無', '電洽'],
-                    '臺北市松山區': ['電洽', '無', '電洽'], '臺北市南港區': ['電洽', '無', '電洽'],
-                    '臺北市信義區': ['電洽', '無', '電洽'], '臺北市士林區': ['電洽', '無', '電洽'],
-                    '臺北市大同區': ['電洽', '無', '電洽'], '臺北市北投區': ['電洽', '無', '電洽'],
-                    '新北市汐止區': ['電洽', '無', '電洽'], '新北市淡水區': ['電洽', '無', '電洽'],
-                    '宜蘭縣': ['電洽', '無', '電洽'], '基隆市': ['電洽', '無', '電洽'],
-                    '花蓮縣': ['電洽', '無', '電洽'], '台東縣': ['電洽', '無', '電洽']
-                }
-            };
-
-            const tonnages = Object.keys(pricingData);
-
-            const getSortedResults = () => {
-                if (!selectedTonnage) return { sorted: [], minPrice: null };
-                
-                // 取得所有廠商資料並過濾掉價格為「無」的項目
-                const results = companies
-                    .map((comp, index) => ({
-                        name: comp.name,
-                        phone: comp.phone,
-                        price: pricingData[selectedTonnage][selectedLocation][index]
-                    }))
-                    .filter(item => item.price !== '無'); // 過濾掉「無」
-
-                const numericPrices = results.map(r => r.price).filter(p => typeof p === 'number');
-                const minPrice = numericPrices.length > 0 ? Math.min(...numericPrices) : null;
-                
-                const sorted = [...results].sort((a, b) => {
-                    if (typeof a.price === 'number' && typeof b.price === 'number') return a.price - b.price;
-                    if (typeof a.price === 'number') return -1;
-                    if (typeof b.price === 'number') return 1;
-                    return 0;
-                });
-                return { sorted, minPrice };
-            };
-
-            const { sorted: sortedCompanies, minPrice } = getSortedResults();
-
-            useEffect(() => {
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-            });
-
-            return (
-                <div className="min-h-screen flex items-center justify-center p-4 text-slate-900">
-                    <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200">
-                        {/* 標題欄：黃底紅字 */}
-                        <div className="bg-[#FFCC00] p-6 text-center border-b-4 border-red-600">
-                            <h1 className="text-2xl font-black italic text-red-600">外車報價查詢系統</h1>
-                        </div>
-
-                        <div className="p-6">
-                            {/* 地點選擇 */}
-                            <div className="mb-6">
-                                <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest flex items-center gap-1">
-                                    <i data-lucide="map-pin" className="w-3 h-3"></i> 1. 選擇您的取件地點
-                                </label>
-                                <select 
-                                    value={selectedLocation} 
-                                    onChange={(e) => setSelectedLocation(e.target.value)}
-                                    className="w-full p-3 bg-white border-2 border-slate-200 rounded-xl font-bold outline-none focus:border-[#FFCC00]"
-                                >
-                                    {locations.map(loc => <option key={loc} value={loc}>{loc}</option>)}
-                                </select>
-                                
-                                {/* 備註說明：發車計算 */}
-                                <div className="mt-3 flex items-start gap-2 bg-blue-50 border border-blue-100 p-3 rounded-lg">
-                                    <i data-lucide="info" className="w-4 h-4 text-blue-500 mt-0.5 shrink-0"></i>
-                                    <p className="text-xs text-blue-700 leading-relaxed font-medium">
-                                        <span className="font-bold underline decoration-blue-300">備註：</span> 報價金額係以「臺北市內湖區」發車送達計算，各區域運費可能隨具體地址調整。
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* 噸數選擇 */}
-                            <div className="mb-8">
-                                <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest flex items-center gap-1">
-                                    <i data-lucide="truck" className="w-3 h-3"></i> 2. 選擇車輛類型
-                                </label>
-                                <div className="grid grid-cols-3 gap-3">
-                                    {tonnages.map(ton => (
-                                        <button 
-                                            key={ton} 
-                                            onClick={() => setSelectedTonnage(ton)}
-                                            className={`py-3 rounded-xl font-black border-2 transition-all ${selectedTonnage === ton ? 'bg-[#FFCC00] border-slate-900' : 'bg-white border-slate-200 text-slate-400'}`}
-                                        >
-                                            {ton}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* 報價結果 */}
-                            <div className="bg-slate-50 rounded-2xl p-2 min-h-[250px] border border-slate-200 shadow-inner">
-                                {!selectedTonnage ? (
-                                    <div className="flex flex-col items-center justify-center h-[250px] text-slate-300 font-bold">
-                                        <p>請點選車輛類型</p>
-                                    </div>
-                                ) : sortedCompanies.length === 0 ? (
-                                    <div className="flex flex-col items-center justify-center h-[250px] text-slate-400 font-bold">
-                                        <p>該地區目前無配合廠商報價</p>
-                                    </div>
-                                ) : (
-                                    <div className="space-y-3 animate-fade-in">
-                                        {sortedCompanies.map(item => {
-                                            const isNumber = typeof item.price === 'number';
-                                            const isBest = isNumber && item.price === minPrice;
-                                            return (
-                                                <div key={item.name} className={`flex items-center justify-between p-4 rounded-xl bg-white border-2 relative ${isBest ? 'border-[#FFCC00]' : 'border-slate-100'}`}>
-                                                    {isBest && (
-                                                        <div className="absolute top-0 right-0 bg-[#FFCC00] text-[10px] font-black px-2 py-0.5 rounded-bl-lg">
-                                                            最優惠
-                                                        </div>
-                                                    )}
-                                                    <div className="flex flex-col">
-                                                        <span className="text-lg font-black italic">{item.name}</span>
-                                                        <span className="text-[10px] text-slate-500 font-bold flex items-center gap-1">
-                                                            <i data-lucide="phone" className="w-2 h-2"></i> {item.phone}
-                                                        </span>
-                                                    </div>
-                                                    <div className="text-right flex flex-col items-end">
-                                                        <span className="text-2xl font-black tracking-tighter">
-                                                            {isNumber ? item.price.toLocaleString() : item.price}
-                                                        </span>
-                                                        {isNumber && <span className="text-[10px] text-slate-400 font-bold">元</span>}
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* 腳註 */}
-                        <div className="bg-slate-50 py-3 text-center border-t border-slate-100 flex flex-col gap-1">
-                            <p className="text-[10px] text-red-600 font-black italic tracking-widest">※ 此報價為未稅價 ※</p>
-                            <p className="text-[10px] text-slate-400 font-medium tracking-tight">費用請依實際合約報價為主</p>
-                        </div>
-                    </div>
-                </div>
-            );
+      useEffect(() => {
+        if (window.lucide) {
+          window.lucide.createIcons();
         }
+      });
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+      // ✅ 取三維資料（關鍵）
+      const rawResults =
+        pricingData[origin]
+          ?.vehicles?.[vehicle]
+          ?. [pickup] ?? [];
+
+      const results = rawResults
+        .filter(r => typeof r.price === 'number')
+        .sort((a, b) => a.price - b.price);
+
+      const minPrice = results[0]?.price ?? null;
+
+      return (
+        <div className="min-h-screen flex items-center justify-center p-4">
+          <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+
+            {/* Header */}
+            <div className="bg-[#FFCC00] p-6 text-center border-b-4 border-red-600">
+              <h1 className="text-2xl font-black italic text-red-600">
+                外車報價查詢系統
+              </h1>
+            </div>
+
+            <div className="p-6 space-y-6">
+
+              {/* 1. 發車地點 */}
+              <div>
+                <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">
+                  1. 選擇發車地點
+                </label>
+                <select
+                  className="w-full p-3 border-2 border-slate-200 rounded-xl font-bold"
+                  value={origin}
+                  onChange={e => {
+                    setOrigin(e.target.value);
+                    setPickup('');
+                    setVehicle('');
+                  }}
+                >
+                  <option value="">請選擇</option>
+                  {Object.keys(pricingData).map(loc => (
+                    <option key={loc} value={loc}>{loc}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* 2. 取件地點 */}
+              {origin && (
+                <div>
+                  <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">
+                    2. 選擇取件地點
+                  </label>
+                  <select
+                    className="w-full p-3 border-2 border-slate-200 rounded-xl font-bold"
+                    value={pickup}
+                    onChange={e => {
+                      setPickup(e.target.value);
+                      setVehicle('');
+                    }}
+                  >
+                    <option value="">請選擇</option>
+                    {pricingData[origin].pickupLocations.map(p => (
+                      <option key={p} value={p}>{p}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {/* 3. 車輛類型 */}
+              {pickup && (
+                <div>
+                  <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">
+                    3. 選擇車輛類型
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {Object.keys(pricingData[origin].vehicles).map(v => (
+                      <button
+                        key={v}
+                        onClick={() => setVehicle(v)}
+                        className={`py-3 rounded-xl font-black border-2 transition-all
+                          ${vehicle === v
+                            ? 'bg-[#FFCC00] border-slate-900'
+                            : 'bg-white border-slate-200 text-slate-400'}
+                        `}
+                      >
+                        {v}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 報價結果 */}
+              <div className="bg-slate-50 rounded-xl border border-slate-200 p-3 min-h-[220px]">
+                {!vehicle ? (
+                  <div className="h-full flex items-center justify-center text-slate-300 font-bold">
+                    請完成上方選擇
+                  </div>
+                ) : results.length === 0 ? (
+                  <div className="h-full flex items-center justify-center text-slate-400 font-bold">
+                    該條件無報價資料
+                  </div>
+                ) : (
+                  <div className="space-y-3 animate-fade-in">
+                    {results.map(item => (
+                      <div
+                        key={item.company}
+                        className={`relative bg-white p-4 rounded-xl border-2
+                          ${item.price === minPrice
+                            ? 'border-[#FFCC00]'
+                            : 'border-slate-100'}
+                        `}
+                      >
+                        {item.price === minPrice && (
+                          <div className="absolute top-0 right-0 bg-[#FFCC00] text-[10px] font-black px-2 py-0.5 rounded-bl-lg">
+                            最優惠
+                          </div>
+                        )}
+
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <div className="text-lg font-black italic">
+                              {item.company}
+                            </div>
+
+                            {item.phone && (
+                              <div className="text-[11px] text-slate-500 font-bold mt-1">
+                                {item.phone}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="text-right">
+                            <div className="text-2xl font-black">
+                              {item.price.toLocaleString()}
+                            </div>
+                            <div className="text-[10px] text-slate-400 font-bold">
+                              元
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+            </div>
+
+            {/* Footer */}
+            <div className="bg-slate-50 py-3 text-center border-t border-slate-100">
+              <p className="text-[10px] text-red-600 font-black italic">
+                ※ 報價為未稅價，實際以合約為準 ※
+              </p>
+            </div>
+
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
 </body>
 </html>
