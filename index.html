@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>外車報價查詢系統</title>
 
-  <!-- ✅ Tailwind CSS -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- ✅ React & Babel（script 標籤完整，避免怪問題） -->
+  <!-- React & Babel -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -31,22 +31,18 @@
 <body class="bg-slate-100">
   <div id="root"></div>
 
-  <!-- ✅ 載入資料（請確認 data/pricingData.js 路徑） -->
+  <!-- ✅ 載入資料 -->
   <script src="./data/pricingData.js"></script>
 
   <script type="text/babel">
     const { useState } = React;
 
     /**
-     * ✅ ✅ ✅ 唯一穩定的車輛類型判斷
-     *
+     * ✅ 最終且穩定的車輛類型判斷
      * 規則：
-     * - vehicles[key] 必須是 object
-     * - 裡面「至少有一個 key」是合法的取件地點
-     * - 該取件地點對應的 value 必須是「報價陣列」
-     *
-     * ✅ 真車型：3.5T / 6.2T / 17T / 500 / 501-1000
-     * ❌ 偽車型：聯絡電話 / 04-xxxx / 0937-xxxx
+     * - vehicles[key] 是 object
+     * - 裡面至少有一個 key 是合法取件地點
+     * - 該取件地點的 value 是「報價陣列」
      */
     function isVehicleType(origin, key) {
       const vehicleObj = pricingData?.[origin]?.vehicles?.[key];
@@ -56,9 +52,8 @@
         return false;
       }
 
-      return Object.keys(vehicleObj).some(pickup =>
-        pickups.includes(pickup) &&
-        Array.isArray(vehicleObj[pickup])
+      return Object.keys(vehicleObj).some(p =>
+        pickups.includes(p) && Array.isArray(vehicleObj[p])
       );
     }
 
@@ -70,11 +65,25 @@
       const rawResults =
         pricingData?.[origin]?.vehicles?.[vehicle]?.[pickup] ?? [];
 
+      /**
+       * ✅ 報價整理規則
+       * - 保留：數字價格、電洽
+       * - 排除：null / undefined / '無'
+       * - 排序：數字 → 電洽
+       */
       const results = rawResults
-        .filter(r => typeof r.price === 'number')
-        .sort((a, b) => a.price - b.price);
+        .filter(r => r.price !== null && r.price !== undefined && r.price !== '無')
+        .sort((a, b) => {
+          if (typeof a.price === 'number' && typeof b.price === 'number') {
+            return a.price - b.price;
+          }
+          if (typeof a.price === 'number') return -1;
+          if (typeof b.price === 'number') return 1;
+          return 0;
+        });
 
-      const minPrice = results[0]?.price ?? null;
+      const minPrice =
+        results.find(r => typeof r.price === 'number')?.price ?? null;
 
       return (
         <div className="min-h-screen flex items-center justify-center p-4">
@@ -132,7 +141,7 @@
                 </div>
               )}
 
-              {/* 3. 車輛類型（✅ 不會再出現電話） */}
+              {/* 3. 車輛類型 */}
               {pickup && (
                 <div>
                   <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">
@@ -174,12 +183,12 @@
                       <div
                         key={`${item.company}-${item.price}`}
                         className={`relative bg-white p-4 rounded-xl border-2
-                          ${item.price === minPrice
+                          ${item.price === minPrice && typeof item.price === 'number'
                             ? 'border-[#FFCC00]'
                             : 'border-slate-100'}
                         `}
                       >
-                        {item.price === minPrice && (
+                        {item.price === minPrice && typeof item.price === 'number' && (
                           <div className="absolute top-0 right-0 bg-[#FFCC00] text-[10px] font-black px-2 py-0.5 rounded-bl-lg">
                             最優惠
                           </div>
@@ -198,12 +207,20 @@
                           </div>
 
                           <div className="text-right">
-                            <div className="text-2xl font-black">
-                              {item.price.toLocaleString()}
-                            </div>
-                            <div className="text-[10px] text-slate-400 font-bold">
-                              元
-                            </div>
+                            {typeof item.price === 'number' ? (
+                              <>
+                                <div className="text-2xl font-black">
+                                  {item.price.toLocaleString()}
+                                </div>
+                                <div className="text-[10px] text-slate-400 font-bold">
+                                  元
+                                </div>
+                              </>
+                            ) : (
+                              <div className="text-lg font-black text-orange-500">
+                                電洽
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
