@@ -41,7 +41,7 @@
 <body class="bg-slate-100">
   <div id="root"></div>
 
-  <!-- ✅ 載入資料（請確認路徑正確） -->
+  <!-- ✅ 載入資料（這一行非常重要） -->
   <script src="./data/pricingData.js"></script>
 
   <script type="text/babel">
@@ -52,11 +52,11 @@
       const [pickup, setPickup] = useState('');
       const [vehicle, setVehicle] = useState('');
 
-      // ✅ 正確三維資料存取
+      // ✅ 正確的三維資料存取
       const rawResults =
         pricingData[origin]
           ?.vehicles?.[vehicle]
-          ?. [pickup] ?? [];
+          ?.[pickup] ?? [];
 
       const results = rawResults
         .filter(r => typeof r.price === 'number')
@@ -120,7 +120,7 @@
                 </div>
               )}
 
-              {/* 3. 車輛類型 */}
+              {/* 3. 車輛類型（✅ 只剩這一排按鈕） */}
               {pickup && (
                 <div>
                   <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">
@@ -178,7 +178,7 @@
                               {item.company}
                             </div>
 
-                            {/* ✅ 電話：純文字，顯示在名稱下方 */}
+                            {/* ✅ 電話：純文字，不是按鈕 */}
                             {item.phone && (
                               <div className="text-[11px] text-slate-500 font-semibold mt-1">
                                 {item.phone}
