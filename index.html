@@ -48,7 +48,10 @@
     const { useState } = React;
 
     // ✅ 只允許真正的車輛類型（防止「聯絡電話」混進來）
-    const isVehicleType = (v) => /T$|KG$/i.test(v);
+    const isVehicleType = (v) =>
+      /T$/i.test(v) ||           // 3.5T, 6.2T, 17T
+      /KG$/i.test(v) ||          // 500KG
+      /^[0-9]+(-[0-9]+)?$/.test(v); // 500, 501-1000, 1501-2000
 
     function App() {
       const [origin, setOrigin] = useState('');
