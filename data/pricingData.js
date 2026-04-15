@@ -222,6 +222,14 @@ const pricingData = {
             "price": 4800
           }
         ]
+        "花蓮縣": [
+    { "company": "大誠", "phone": "02-7751-5563", "price": "電洽" },
+    { "company": "全濬", "phone": "03-313-4455", "price": "電洽" }
+  ],
+        "台東縣": [
+    { "company": "大誠", "phone": "02-7751-5563", "price": "電洽" },
+    { "company": "全濬", "phone": "03-313-4455", "price": "電洽" }
+  ]
       },
       "6.2T": {
         "機場": [
@@ -368,6 +376,14 @@ const pricingData = {
             "price": 6500
           }
         ]
+        "花蓮縣": [
+    { "company": "大誠", "phone": "02-7751-5563", "price": "電洽" },
+    { "company": "全濬", "phone": "03-313-4455", "price": "電洽" }
+  ],
+        "台東縣": [
+    { "company": "大誠", "phone": "02-7751-5563", "price": "電洽" },
+    { "company": "全濬", "phone": "03-313-4455", "price": "電洽" }
+  ]
       },
       "17T": {
         "機場": [
