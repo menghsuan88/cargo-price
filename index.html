@@ -31,19 +31,12 @@
 <body class="bg-slate-100">
   <div id="root"></div>
 
-  <!-- ✅ 載入資料 -->
+  <!-- 載入資料 -->
   <script src="./data/pricingData.js"></script>
 
   <script type="text/babel">
     const { useState } = React;
 
-    /**
-     * ✅ 最終且穩定的車輛類型判斷
-     * 規則：
-     * - vehicles[key] 是 object
-     * - 裡面至少有一個 key 是合法取件地點
-     * - 該取件地點的 value 是「報價陣列」
-     */
     function isVehicleType(origin, key) {
       const vehicleObj = pricingData?.[origin]?.vehicles?.[key];
       const pickups = pricingData?.[origin]?.pickupLocations ?? [];
@@ -66,19 +59,24 @@
         pricingData?.[origin]?.vehicles?.[vehicle]?.[pickup] ?? [];
 
       /**
-       * ✅ 報價整理規則
-       * - 保留：數字價格、電洽
+       * ✅ 修正後的報價整理規則
+       * - 保留：數字 / 電洽 / 費用另計（任何字串）
        * - 排除：null / undefined / '無'
-       * - 排序：數字 → 電洽
+       * - 排序：數字 → 非數字（電洽 / 費用另計）
        */
       const results = rawResults
-        .filter(r => r.price !== null && r.price !== undefined && r.price !== '無')
+        .filter(r =>
+          r.price !== null &&
+          r.price !== undefined &&
+          r.price !== '無'
+        )
         .sort((a, b) => {
-          if (typeof a.price === 'number' && typeof b.price === 'number') {
-            return a.price - b.price;
-          }
-          if (typeof a.price === 'number') return -1;
-          if (typeof b.price === 'number') return 1;
+          const aIsNumber = typeof a.price === 'number';
+          const bIsNumber = typeof b.price === 'number';
+
+          if (aIsNumber && bIsNumber) return a.price - b.price;
+          if (aIsNumber) return -1;
+          if (bIsNumber) return 1;
           return 0;
         });
 
@@ -218,7 +216,7 @@
                               </>
                             ) : (
                               <div className="text-lg font-black text-orange-500">
-                                電洽
+                                {item.price}
                               </div>
                             )}
                           </div>
