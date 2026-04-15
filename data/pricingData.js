@@ -1,5 +1,5 @@
 const pricingData = {
-  "台北市內湖區": {
+  "內湖服務中心": {
     "pickupLocations": [
       "機場",
       "台北市內湖區",
@@ -389,7 +389,7 @@ const pricingData = {
       "03-313-4455": {}
     }
   },
-  "新北市中和區": {
+  "中和服務中心": {
     "pickupLocations": [
       "新北市",
       "台北市",
@@ -576,7 +576,7 @@ const pricingData = {
       "03-313-4455": {}
     }
   },
-  "桃園市大園區": {
+  "桃園服務中心": {
     "pickupLocations": [
       "蘆竹",
       "大園",
@@ -1706,7 +1706,7 @@ const pricingData = {
       "03-272-7688": {}
     }
   },
-  "新竹縣竹北市": {
+  "新竹服務中心": {
     "pickupLocations": [
       "機場",
       "新竹市",
@@ -1732,250 +1732,250 @@ const pricingData = {
         "機場": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1700
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1700
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 2000
           }
         ],
         "新竹市": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1100
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1000
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1400
           }
         ],
         "竹北市": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 900
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 900
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1200
           }
         ],
         "湖口鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1100
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1000
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1400
           }
         ],
         "新豐鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1100
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1000
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1600
           }
         ],
         "新埔鎮": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1200
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1100
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1600
           }
         ],
         "關西鎮": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1500
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1600
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1800
           }
         ],
         "芎林鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1200
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1200
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1600
           }
         ],
         "寶山鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1500
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1400
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1600
           }
         ],
         "竹東鎮": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1200
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1200
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1600
           }
         ],
         "橫山鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1500
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1600
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1800
           }
         ],
         "北埔鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1500
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1600
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1800
           }
         ],
         "竹南鎮": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1400
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1400
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1800
           }
         ],
         "頭份市": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1400
           },
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1400
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 1800
           }
         ],
         "苗栗縣": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 2200
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 2600
           }
         ]
@@ -1984,105 +1984,105 @@ const pricingData = {
         "機場": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 2800
           }
         ],
         "新竹市": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1900
           }
         ],
         "竹北市": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1700
           }
         ],
         "湖口鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1900
           }
         ],
         "新豐鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 1900
           }
         ],
         "新埔鎮": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 2000
           }
         ],
         "關西鎮": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 2300
           }
         ],
         "芎林鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 2000
           }
         ],
         "寶山鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 2300
           }
         ],
         "竹東鎮": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 2000
           }
         ],
         "橫山鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 2300
           }
         ],
         "北埔鄉": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 2300
           }
         ],
         "竹南鎮": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 2200
           }
         ],
         "頭份市": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 2200
           }
         ],
         "苗栗縣": [
           {
             "company": "久煇",
-            "phone": null,
+            "phone": "03-533-0152",
             "price": 3200
           }
         ]
@@ -2091,98 +2091,98 @@ const pricingData = {
         "機場": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 2700
           }
         ],
         "新竹市": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1800
           }
         ],
         "竹北市": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1700
           }
         ],
         "湖口鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1800
           }
         ],
         "新豐鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1800
           }
         ],
         "新埔鎮": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 1900
           }
         ],
         "關西鎮": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 2400
           }
         ],
         "芎林鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 2000
           }
         ],
         "寶山鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 2200
           }
         ],
         "竹東鎮": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 2000
           }
         ],
         "橫山鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 2400
           }
         ],
         "北埔鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 2400
           }
         ],
         "竹南鎮": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 2200
           }
         ],
         "頭份市": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 2200
           }
         ]
@@ -2191,103 +2191,103 @@ const pricingData = {
         "機場": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 6700
           },
           {
             "company": "全濬",
-            "phone": null,
+            "phone": "03-313-4455",
             "price": 8000
           }
         ],
         "新竹市": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 3500
           }
         ],
         "竹北市": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 3500
           }
         ],
         "湖口鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 3500
           }
         ],
         "新豐鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 3500
           }
         ],
         "新埔鎮": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 3700
           }
         ],
         "關西鎮": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 4300
           }
         ],
         "芎林鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 3700
           }
         ],
         "寶山鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 3900
           }
         ],
         "竹東鎮": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 3700
           }
         ],
         "橫山鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 4100
           }
         ],
         "北埔鄉": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 4500
           }
         ],
         "竹南鎮": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 4000
           }
         ],
         "頭份市": [
           {
             "company": "大誠",
-            "phone": null,
+            "phone": "03-592-2082",
             "price": 4000
           }
         ]
